@@ -32,7 +32,7 @@ namespace TH_TEST {
 
     inline void assert(bool condition){
         if(!condition){
-            std::cerr<<"[Test Failed at"<<current_test->line<<" : "<<current_test->file<<"]"<<std::endl;
+            std::cerr<<"["<<current_test->name<<" Failed at "<<current_test->line<<" : "<<current_test->file<<"]"<<std::endl;
             current_test->passed=false;
         }
     }
