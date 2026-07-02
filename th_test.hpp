@@ -39,13 +39,13 @@ namespace TH_TEST {
 
     inline void RUN_TESTS(){
         std::cout<<"RUNNING Tests..."<<std::endl;
-        for(auto test:tests){
+        for(auto& test:tests){
             current_test=&test;
             test.func();
         }
         bool all_passed=true;
         std::cout<<"Tests Report:"<<std::endl;
-        for(auto test:tests){
+        for(auto& test:tests){
             if(test.passed){
                 std::cout<<"\t"<<test.name<<"() [Passed]"<<std::endl;
             }else{
