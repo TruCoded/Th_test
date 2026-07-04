@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 
+using namespace std;
 
 #define TEST(func_name)\
     void func_name();\
@@ -17,12 +18,10 @@
 #define ASSERT(condition)\
 {\
     if(!(condition)){\
-        std::cerr<<"[" #condition " Failed at: " __FILE__ ":" <<__LINE__ <<"]"<<std::endl;\
+        cout<<"[" #condition " Failed at: " __FILE__ ":" <<__LINE__ <<"]"<<endl;\
         TH_TEST::current_test->passed=false;\
     }\
 }
-
-
 
 namespace TH_TEST {
 
@@ -33,36 +32,38 @@ namespace TH_TEST {
         int line;
         bool passed=true;
     };
-    inline std::vector<struct test_function> tests;
+    inline vector<struct test_function> tests;
 
     inline struct test_function* current_test=nullptr;
 
-
     inline void RUN_TESTS(){
-        std::cout<<"RUNNING Tests..."<<std::endl;
+        cout << "RUNNING Tests..." << endl << endl;
+        
         for(auto& test:tests){
             current_test=&test;
             test.func();
         }
-        bool all_passed=true;
-        std::cout<<"Tests Report:"<<std::endl;
-        for(auto& test:tests){
-            if(test.passed){
-                std::cout<<"\t"<<test.name<<"() [Passed]"<<std::endl;
+        cout << endl;
+
+        cout << "--------------------------Tests Report---------------------------------" << endl;
+        
+        int passed_count = 0;
+        int total_tests = tests.size();
+        
+        for(size_t i = 0; i < tests.size(); ++i){
+            cout << "\t[" << (i + 1) << "/" << total_tests << "] " << tests[i].name << "() ";
+            if(tests[i].passed){
+                cout << "[Passed]" << endl;
+                passed_count++;
             }else{
-                std::cout<<"\t"<<test.name<<"() [Failed]"<<std::endl;
-                all_passed=false;
+                cout << "[Failed]" << endl;
             }
         }
-        if(all_passed){
-            std::cout<<"[All Tests Passed]"<<std::endl;
-        }
+        cout << endl;
+
+        cout << "Passing Tests [" << passed_count << "/" << total_tests << "]" << endl;
     }
 
 }
-
-
-
-
 
 #endif
