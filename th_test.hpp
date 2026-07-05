@@ -1,10 +1,8 @@
-#ifndef TH_TEST_
+v#ifndef TH_TEST_
 #define TH_TEST_
 
 #include <vector>
 #include <iostream>
-
-using namespace std;
 
 #define TEST(func_name)\
     void func_name();\
@@ -18,7 +16,7 @@ using namespace std;
 #define ASSERT(condition)\
 {\
     if(!(condition)){\
-        cout<<"[" #condition " Failed at: " __FILE__ ":" <<__LINE__ <<"]"<<endl;\
+        std::cerr<<"[" #condition " Failed at: " __FILE__ ":" <<__LINE__ <<"]"<<std::endl;\
         TH_TEST::current_test->passed=false;\
     }\
 }
@@ -32,36 +30,36 @@ namespace TH_TEST {
         int line;
         bool passed=true;
     };
-    inline vector<struct test_function> tests;
+    inline std::vector<struct test_function> tests;
 
     inline struct test_function* current_test=nullptr;
 
     inline void RUN_TESTS(){
-        cout << "RUNNING Tests..." << endl << endl;
+        std::cout << "RUNNING Tests...\n" << std::endl;
         
         for(auto& test:tests){
             current_test=&test;
             test.func();
         }
-        cout << endl;
+        std::cout << std::endl;
 
-        cout << "--------------------------Tests Report---------------------------------" << endl;
+        std::cout << "--------------------------Tests Report---------------------------------" << std::endl;
         
         int passed_count = 0;
         int total_tests = tests.size();
         
         for(size_t i = 0; i < tests.size(); ++i){
-            cout << "\t[" << (i + 1) << "/" << total_tests << "] " << tests[i].name << "() ";
+            std::cout << "\t[" << (i + 1) << "/" << total_tests << "] " << tests[i].name << "() ";
             if(tests[i].passed){
-                cout << "[Passed]" << endl;
+                std::cout << "[Passed]" << std::endl;
                 passed_count++;
             }else{
-                cout << "[Failed]" << endl;
+                std::cout << "[Failed]" << std::endl;
             }
         }
-        cout << endl;
+        std::cout << std::endl;
 
-        cout << "Passing Tests [" << passed_count << "/" << total_tests << "]" << endl;
+        std::cout << "Passing Tests [" << passed_count << "/" << total_tests << "]" << std::endl;
     }
 
 }
