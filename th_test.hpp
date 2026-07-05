@@ -1,4 +1,4 @@
-v#ifndef TH_TEST_
+#ifndef TH_TEST_
 #define TH_TEST_
 
 #include <vector>
